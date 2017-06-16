@@ -33,3 +33,6 @@ Style/FileName:
 
 Style/SymbolArray:
   Enabled: false
+
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
