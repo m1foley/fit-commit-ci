@@ -1,17 +1,21 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :require_user
+  before_action :require_login
 
   private
 
   def current_user
-    @current_user ||= session[:current_user_id] &&
-      User.find_by(id: session[:current_user_id])
+    @current_user ||= LoggedInUser.get(session[:current_user_id]) ||
+      GuestUser.new
   end
 
-  def require_user
-    return if current_user
-    render text: "not logged in"
+  def logged_in?
+    current_user.logged_in?
+  end
+
+  def require_login
+    return unless logged_in?
+    render plain: "Login required"
     throw(:abort)
   end
 end
