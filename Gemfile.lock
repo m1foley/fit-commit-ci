@@ -171,6 +171,9 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.7)
+    turbolinks (5.0.1)
+      turbolinks-source (~> 5)
+    turbolinks-source (5.0.3)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     unicode-display_width (1.2.1)
@@ -198,6 +201,7 @@ DEPENDENCIES
   rubocop (~> 0.49)
   spring
   spring-watcher-listen
+  turbolinks
   web-console
 
 BUNDLED WITH
