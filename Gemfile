@@ -5,6 +5,7 @@ gem "puma"
 gem "pg", "~> 0.20"
 gem "figaro"
 gem "omniauth-github"
+gem "haml-rails"
 
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
