@@ -34,5 +34,8 @@ Style/FileName:
 Style/SymbolArray:
   Enabled: false
 
-Style/MultilineOperationIndentation:
+Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
+
+Style/EmptyMethod:
+  Enabled: false
