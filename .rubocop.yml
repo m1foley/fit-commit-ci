@@ -1,16 +1,12 @@
-# inherit_from: .rubocop_todo.yml
-
 AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
   Include:
-    - '**/Rakefile'
-    - '**/config.ru'
+    - "**/Rakefile"
+    - "**/config.ru"
   Exclude:
-    - 'bin/**/*'
-    - 'db/**/*'
-    - 'config/**/*'
-    - 'script/**/*'
+    - "bin/**/*"
+    - "db/**/*"
 
 Rails:
   Enabled: true
@@ -29,7 +25,7 @@ Style/StringLiterals:
 
 Style/FileName:
   Exclude:
-    - 'Gemfile'
+    - "Gemfile"
 
 Style/SymbolArray:
   Enabled: false
@@ -38,4 +34,16 @@ Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
 Style/EmptyMethod:
+  Enabled: false
+
+Layout/SpaceInsideBrackets:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 90
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Style/PercentLiteralDelimiters:
   Enabled: false
