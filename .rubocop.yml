@@ -23,6 +23,9 @@ Style/Documentation:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
+Style/StringLiteralsInInterpolation:
+  Enabled: false
+
 Style/FileName:
   Exclude:
     - "Gemfile"

@@ -4,13 +4,13 @@ class LoggedInUser < SimpleDelegator
     super
   end
 
-  def logged_in?
-    true
+  def self.get(remember_token)
+    user = remember_token && User.find_by(remember_token: remember_token)
+    user && new(user)
   end
 
-  def self.get(current_user_id)
-    user = current_user_id && User.find_by(id: current_user_id)
-    user && new(user)
+  def logged_in?
+    true
   end
 
   private

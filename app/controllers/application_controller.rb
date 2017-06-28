@@ -2,11 +2,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :require_login
 
+  helper_method :current_user
+
   private
 
   def current_user
-    @current_user ||= LoggedInUser.get(session[:current_user_id]) ||
-      GuestUser.new
+    @current_user ||= find_session_user || GuestUser.new
+  end
+
+  def find_session_user
+    LoggedInUser.get(session[:remember_token])
   end
 
   def logged_in?
