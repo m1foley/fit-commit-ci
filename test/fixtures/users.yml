@@ -1,0 +1,4 @@
+alice:
+  username: "alice_ghusername"
+  remember_token: "alice_remember_token"
+  github_token: "alice_github_token"

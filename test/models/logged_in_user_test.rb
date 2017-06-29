@@ -20,7 +20,7 @@ class LoggedInUserTest < ActiveSupport::TestCase
   end
 
   test "finds an existing user when the token is found" do
-    user = User.create!(username: "gu", remember_token: "rtok1")
-    assert_equal user.id, LoggedInUser.get("rtok1").id
+    user = users(:alice)
+    assert_equal user.id, LoggedInUser.get(user.remember_token).id
   end
 end

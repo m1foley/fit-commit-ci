@@ -2,19 +2,36 @@ class SessionsController < ApplicationController
   skip_before_action :require_login
 
   def create
-    user = find_user || create_user
-
+    user = update_or_create_user
     if user
       session[:remember_token] = user.remember_token
       Rails.logger.info(request.env["omniauth.auth"])
       render plain: "Login success! #{user.inspect}"
     else
-      flash[:error] = "Error creating user"
+      flash[:error] = "Error logging in"
       redirect_to root_path
     end
   end
 
   private
+
+  def update_or_create_user
+    user = find_user
+    if user
+      update_user(user)
+    else
+      create_user
+    end
+  end
+
+  def update_user(user)
+    if user.update(github_token: github_token)
+      user
+    else
+      Rails.logger.error("Error updating user on login: #{user.errors.full_messages}")
+      nil
+    end
+  end
 
   def find_user
     User.find_by(username: github_username)
