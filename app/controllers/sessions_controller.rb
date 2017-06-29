@@ -23,6 +23,7 @@ class SessionsController < ApplicationController
   def create_user
     user = User.new(
       username: github_username,
+      github_token: github_token,
       remember_token: generate_remember_token
     )
 
@@ -38,9 +39,9 @@ class SessionsController < ApplicationController
     request.env["omniauth.auth"]["info"]["nickname"]
   end
 
-  # def github_token
-  #   request.env["omniauth.auth"]["credentials"]["token"]
-  # end
+  def github_token
+    request.env["omniauth.auth"]["credentials"]["token"]
+  end
 
   def generate_remember_token
     SecureRandom.hex(20)

@@ -45,6 +45,9 @@ Layout/SpaceInsideBrackets:
 Metrics/LineLength:
   Max: 90
 
+Metrics/MethodLength:
+  Max: 20
+
 Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
