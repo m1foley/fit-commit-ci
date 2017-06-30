@@ -1,5 +1,5 @@
 %p
-- if logged_in?
+- if signed_in?
   Hello, #{current_user.username}
   = link_to "Sign Out", sign_out_path
 - else

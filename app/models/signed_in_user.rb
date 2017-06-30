@@ -1,4 +1,4 @@
-class LoggedInUser < SimpleDelegator
+class SignedInUser < SimpleDelegator
   def initialize(user)
     self.user = user
     super
@@ -9,7 +9,7 @@ class LoggedInUser < SimpleDelegator
     user && new(user)
   end
 
-  def logged_in?
+  def signed_in?
     true
   end
 

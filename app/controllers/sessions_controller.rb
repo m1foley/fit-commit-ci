@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_login
+  skip_before_action :require_signin
 
   def create
     user = update_or_create_user
@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       Rails.logger.info(request.env["omniauth.auth"])
       flash[:error] = "Hi"
     else
-      flash[:error] = "Error logging in"
+      flash[:error] = "Error signing in"
     end
     redirect_to root_path
   end
@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
     if user.update(github_token: github_token)
       user
     else
-      Rails.logger.error("Error updating user on login: #{user.errors.full_messages}")
+      Rails.logger.error("Error updating user on signin: #{user.errors.full_messages}")
       nil
     end
   end

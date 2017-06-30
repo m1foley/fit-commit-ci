@@ -30,7 +30,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     OmniAuth.config.mock_auth[:github] = nil
   end
 
-  test "logging in an existing user" do
+  test "signing in an existing user" do
     user = users(:alice)
     OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
       "info" => { "nickname" => user.username },
@@ -54,7 +54,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     get auth_github_callback_url
   end
 
-  test "logging out" do
+  test "signing out" do
     sign_in_as(users(:alice))
     assert session[:remember_token].present?
     get sign_out_url

@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :require_login
+  before_action :require_signin
 
-  helper_method :current_user, :logged_in?
+  helper_method :current_user, :signed_in?
 
   private
 
@@ -11,16 +11,16 @@ class ApplicationController < ActionController::Base
   end
 
   def find_session_user
-    LoggedInUser.get(session[:remember_token])
+    SignedInUser.get(session[:remember_token])
   end
 
-  def logged_in?
-    current_user.logged_in?
+  def signed_in?
+    current_user.signed_in?
   end
 
-  def require_login
-    return unless logged_in?
-    render plain: "Login required"
+  def require_signin
+    return unless signed_in?
+    render plain: "Sign in required"
     throw(:abort)
   end
 end
