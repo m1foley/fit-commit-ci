@@ -1,5 +1,6 @@
 %p
-  Logged in: #{!!current_user.logged_in?} (#{current_user.username})
-
-%p
+- if logged_in?
+  Hello, #{current_user.username}
+  = link_to "Sign Out", sign_out_path
+- else
   = link_to "Sign In with GitHub", "/auth/github"

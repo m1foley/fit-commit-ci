@@ -6,11 +6,16 @@ class SessionsController < ApplicationController
     if user
       session[:remember_token] = user.remember_token
       Rails.logger.info(request.env["omniauth.auth"])
-      render plain: "Login success! #{user.inspect}"
+      flash[:error] = "Hi"
     else
       flash[:error] = "Error logging in"
-      redirect_to root_path
     end
+    redirect_to root_path
+  end
+
+  def destroy
+    session[:remember_token] = nil
+    redirect_to root_path
   end
 
   private
