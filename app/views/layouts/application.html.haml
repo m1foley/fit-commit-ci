@@ -7,4 +7,8 @@
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track": "reload"
     = javascript_include_tag "application", "data-turbolinks-track": "reload"
   %body
-    = yield
+    - flash.to_hash.slice("notice", "error").each do |key, value|
+      .flash{ class: key }
+        = value
+    %main.content
+      = yield

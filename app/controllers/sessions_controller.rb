@@ -5,8 +5,6 @@ class SessionsController < ApplicationController
     user = update_or_create_user
     if user
       session[:remember_token] = user.remember_token
-      Rails.logger.info(request.env["omniauth.auth"])
-      flash[:error] = "Hi"
     else
       flash[:error] = "Error signing in"
     end
