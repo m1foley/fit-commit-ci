@@ -1,0 +1,9 @@
+%nav.app-nav{ role: "navigation" }
+  .app-nav__container
+    Fit Commit CI
+    .app-nav__user-items
+      - if signed_in?
+        = current_user.username
+        = link_to "Sign Out", sign_out_path
+      - else
+        = link_to "Sign In with GitHub", "/auth/github"

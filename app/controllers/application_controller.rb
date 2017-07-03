@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    @current_user ||= find_session_user || GuestUser.new
+    @_current_user ||= find_session_user || GuestUser.new
   end
 
   def find_session_user
@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_signin
-    return unless signed_in?
+    return if signed_in?
     render plain: "Sign in required"
     throw(:abort)
   end
