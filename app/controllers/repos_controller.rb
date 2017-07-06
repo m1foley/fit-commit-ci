@@ -7,7 +7,13 @@ class ReposController < ApplicationController
   private
 
   def load_repos
-    @repos = github_client.repos
+    @repos = github_client.repos.map do |repo_hash|
+      Repo.new(
+        github_id: repo_hash[:id],
+        name: repo_hash[:full_name],
+        private: repo_hash[:private]
+      )
+    end
   end
 
   def github_client
