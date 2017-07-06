@@ -1,10 +1,6 @@
 require "test_helper"
 
 class SessionsControllerTest < ActionDispatch::IntegrationTest
-  teardown do
-    OmniAuth.config.mock_auth[:github] = nil
-  end
-
   test "invalid credentials" do
     skip("Implement /auth/failure?message=invalid_credentials")
     OmniAuth.config.mock_auth[:github] = :invalid_credentials
@@ -44,14 +40,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     user.reload
     assert_equal "new_ghtoken", user.github_token
     assert_equal session[:remember_token], user.remember_token
-  end
-
-  def sign_in_as(user)
-    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
-      "info" => { "nickname" => user.username },
-      "credentials" => { "token" => "ghtoken" }
-    )
-    get auth_github_callback_url
   end
 
   test "signing out" do

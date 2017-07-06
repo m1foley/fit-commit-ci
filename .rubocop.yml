@@ -56,3 +56,6 @@ Style/PercentLiteralDelimiters:
 
 Layout/MultilineMethodCallBraceLayout:
   Enabled: false
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
