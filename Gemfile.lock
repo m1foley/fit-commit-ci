@@ -43,6 +43,8 @@ GEM
     arel (8.0.0)
     ast (2.3.0)
     bindex (0.5.0)
+    bootsnap (1.1.2)
+      msgpack (~> 1.0)
     builder (3.2.3)
     byebug (9.0.6)
     concurrent-ruby (1.0.5)
@@ -87,6 +89,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.2.0)
     minitest (5.10.2)
+    msgpack (1.1.0)
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
@@ -204,6 +207,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bootsnap (>= 1.1.2)
   byebug
   haml-rails
   listen

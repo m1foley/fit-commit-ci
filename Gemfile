@@ -8,6 +8,9 @@ gem "omniauth-github"
 gem "haml-rails"
 gem "octokit", "~> 4.7"
 
+# Reduces boot times through caching; required in config/boot.rb
+gem "bootsnap", ">= 1.1.2", require: false
+
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 end
