@@ -10,11 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170706053029) do
+ActiveRecord::Schema.define(version: 20170706223052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "repo_id"
+    t.boolean "admin", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["repo_id"], name: "index_memberships_on_repo_id"
+    t.index ["user_id", "repo_id"], name: "index_memberships_on_user_id_and_repo_id", unique: true
+  end
+
+  create_table "owners", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "github_id", null: false
+    t.string "name", null: false
+    t.boolean "organization", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["github_id"], name: "index_owners_on_github_id", unique: true
+  end
 
   create_table "repos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "github_id", null: false
@@ -23,6 +42,8 @@ ActiveRecord::Schema.define(version: 20170706053029) do
     t.boolean "active", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "owner_id"
+    t.index ["owner_id"], name: "index_repos_on_owner_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -35,4 +56,7 @@ ActiveRecord::Schema.define(version: 20170706053029) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "memberships", "repos"
+  add_foreign_key "memberships", "users"
+  add_foreign_key "repos", "owners"
 end
