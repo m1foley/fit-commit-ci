@@ -1,0 +1,11 @@
+{
+  "config/projections.json": {
+    "command": "projections"
+  },
+  "app/service_objects/*.rb": {
+    "command": "service_object",
+    "affinity": "model",
+    "test": "spec/service_objects/{}_spec.rb",
+    "template": "class {camelcase|capitalize|colons}\n  def initialize(foo)\n  end\nend"
+  }
+}
