@@ -72,6 +72,7 @@ class SyncReposTest < ActiveSupport::TestCase
           }
         ])
         SyncRepos.new(user).call
+        user.repos.take.update!(active: true)
 
         stub_github_user_repos([
           {
@@ -80,21 +81,29 @@ class SyncReposTest < ActiveSupport::TestCase
             owner: { id: 1, login: "new_owner_name" }
           },
           {
-            id: 2, full_name: "alice/bar", private: true,
+            id: 2, full_name: "bar/bar", private: true,
             permissions: { admin: false },
-            owner: { id: 1, login: "new_owner_name" }
+            owner: { id: 1, login: "new_owner_name", type: "Organization" }
           }
         ])
 
         SyncRepos.new(user).call
       end
 
-      repos = user.repos.reload
-      assert_equal [ 1, 2 ], repos.map(&:github_id).sort
-      assert_equal [ "alice/bar", "alice/foo_renamed" ], repos.map(&:name).sort
-      assert repos.all?(&:private?)
-      assert repos.none?(&:active?)
-      assert repos.none?(&:in_organization?)
+      repos = user.repos.reload.to_a
+      assert_equal 2, repos.size
+      foo_repo = repos.detect { |r| r.github_id == 1 }
+      bar_repo = repos.detect { |r| r.github_id == 2 }
+
+      assert_equal "alice/foo_renamed", foo_repo.name
+      assert foo_repo.private?
+      assert foo_repo.active?
+      assert !foo_repo.in_organization?
+
+      assert_equal "bar/bar", bar_repo.name
+      assert bar_repo.private?
+      assert !bar_repo.active?
+      assert bar_repo.in_organization?
 
       memberships = user.memberships.reload
       assert memberships.none?(&:admin?)

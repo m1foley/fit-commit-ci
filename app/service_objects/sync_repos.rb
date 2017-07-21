@@ -6,21 +6,24 @@ class SyncRepos
   end
 
   def call
+    fetch_remote_repo_hashes
     delete_user_memberships
     create_user_memberships
   end
 
   private
 
-  attr_accessor :user
+  attr_accessor :user, :remote_repo_hashes
+
+  def fetch_remote_repo_hashes
+    self.remote_repo_hashes = github_client.repos
+  end
 
   def delete_user_memberships
     user.memberships.delete_all
   end
 
   def create_user_memberships
-    remote_repo_hashes = github_client.repos
-
     # The transaction ensures all inserts will happen together or not at all,
     # which should lead to more consistent repo syncs.
     Repo.transaction do
@@ -28,8 +31,6 @@ class SyncRepos
         create_user_membership(remote_repo_hash)
       end
     end
-  rescue => e
-    Rails.logger.error("Error creating memberships: #{e.inspect} #{e.backtrace}")
   end
 
   def create_user_membership(remote_repo_hash)
@@ -46,6 +47,8 @@ class SyncRepos
     else
       Rails.logger.error("Error creating membership: #{membership.error_messages_formatted}")
     end
+  rescue => e
+    Rails.logger.error("Error creating membership: #{e.inspect} #{e.backtrace}")
   end
 
   def github_client
