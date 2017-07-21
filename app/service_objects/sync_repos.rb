@@ -71,10 +71,9 @@ class SyncRepos
   end
 
   def upsert_repo(remote_repo_hash, owner)
-    repo = find_or_initialize_repo(remote_repo_hash)
+    repo = Repo.find_or_initialize_by(github_id: remote_repo_hash[:id])
     attrs = {
       private: remote_repo_hash[:private],
-      github_id: remote_repo_hash[:id],
       name: remote_repo_hash[:full_name],
       in_organization: remote_repo_hash[:owner][:type] == GITHUB_ORGANIZATION_TYPE,
       owner: owner
@@ -86,11 +85,5 @@ class SyncRepos
       Rails.logger.error("Error upserting repo: #{repo.error_messages_formatted}")
       nil
     end
-  end
-
-  def find_or_initialize_repo(remote_repo_hash)
-    Repo.find_by(github_id: remote_repo_hash[:id]) ||
-      Repo.find_by(name: remote_repo_hash[:full_name]) ||
-      Repo.new
   end
 end

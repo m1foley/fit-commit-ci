@@ -3,5 +3,6 @@ class Repo < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
 
-  validates :github_id, uniqueness: true, presence: true
+  validates :github_id, uniqueness: true, presence: true,
+    numericality: { greater_than: 0 }
 end
