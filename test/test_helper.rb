@@ -1,10 +1,12 @@
 require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "webmock/minitest"
+require_relative "helpers/github_api_helper"
 
 class ActiveSupport::TestCase
   fixtures :all
   OmniAuth.config.test_mode = true
+  include GithubApiHelper
 end
 
 class ActionDispatch::IntegrationTest

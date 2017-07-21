@@ -5,9 +5,9 @@ class ReposControllerTest < ActionDispatch::IntegrationTest
     user = users(:alice)
     sign_in_as(user)
 
-    github_data = [{ id: 123, full_name: "alice/foo", private: false }]
-    stub_request(:get, %r(https://api\.github\.com/user/repos)).
-      to_return(status: 200, body: github_data)
+    stub_github_user_repos([
+      { id: 123, full_name: "alice/foo", private: false }
+    ])
 
     get repos_url
     assert_select ".repo", 1
