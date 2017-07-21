@@ -6,7 +6,7 @@ class SyncRepos
   end
 
   def call
-    delete_user_repos
+    delete_user_memberships
     create_user_memberships
   end
 
@@ -14,8 +14,8 @@ class SyncRepos
 
   attr_accessor :user
 
-  def delete_user_repos
-    user.repos.delete_all
+  def delete_user_memberships
+    user.memberships.delete_all
   end
 
   def create_user_memberships
@@ -35,6 +35,7 @@ class SyncRepos
   def create_user_membership(remote_repo_hash)
     owner = upsert_owner(remote_repo_hash[:owner]) || return
     repo = upsert_repo(remote_repo_hash, owner) || return
+
     membership = user.memberships.build(
       repo: repo,
       admin: remote_repo_hash[:permissions][:admin]
