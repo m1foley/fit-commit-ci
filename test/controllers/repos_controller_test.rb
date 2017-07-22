@@ -1,7 +1,7 @@
 require "test_helper"
 
 class ReposControllerTest < ActionDispatch::IntegrationTest
-  test "viewing repos list" do
+  def test_view_repos_list
     user = users(:alice)
     sign_in_as(user)
 
