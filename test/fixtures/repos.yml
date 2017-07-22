@@ -1,0 +1,7 @@
+brian_repo_1:
+  github_id: 1000
+  name: "brian/repo1"
+  private: false
+  active: false
+  in_organization: false
+  owner: brian_owner

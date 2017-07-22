@@ -6,6 +6,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
       "info" => { "nickname" => "ghname" },
       "credentials" => { "token" => "ghtoken" }
     )
+    SyncRepos.any_instance.expects(:call)
 
     assert_difference("User.count", 1) do
       get auth_github_callback_url

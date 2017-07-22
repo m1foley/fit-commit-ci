@@ -2,3 +2,8 @@ alice:
   username: "alice_ghusername"
   remember_token: "alice_remember_token"
   github_token: "alice_github_token"
+
+brian:
+  username: "brian_ghusername"
+  remember_token: "brian_remember_token"
+  github_token: "brian_github_token"

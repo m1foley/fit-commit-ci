@@ -48,6 +48,7 @@ class SessionsController < ApplicationController
     )
 
     if user.save
+      SyncRepos.new(user).call
       user
     else
       Rails.logger.error("Error creating user: #{user.errors.full_messages}")
