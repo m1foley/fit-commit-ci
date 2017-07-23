@@ -74,3 +74,6 @@ Metrics/BlockLength:
 
 Layout/AlignHash:
   Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented

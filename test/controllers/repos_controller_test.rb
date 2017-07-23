@@ -14,7 +14,6 @@ class ReposControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(user)
 
     get repos_url
-    assert_select ".repo", 1
-    assert_select ".repo", user.repos.take.name
+    assert_select ".repo .repo-toggle"
   end
 end
