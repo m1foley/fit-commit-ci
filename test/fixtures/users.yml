@@ -1,8 +1,10 @@
+# Newbie with no GitHub data persisted. Kinda unrealistic because users have
+# that info populated upon signup, but it makes some tests easier.
 alice:
   username: "alice_ghusername"
   remember_token: "alice_remember_token"
   github_token: "alice_github_token"
-
+# Existing user with GitHub data populated
 brian:
   username: "brian_ghusername"
   remember_token: "brian_remember_token"
