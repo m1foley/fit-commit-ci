@@ -7,6 +7,7 @@ gem "pg", "~> 0.20"
 gem "omniauth-github"
 gem "haml-rails"
 gem "octokit", "~> 4.7"
+gem "sass-rails"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.2", require: false
