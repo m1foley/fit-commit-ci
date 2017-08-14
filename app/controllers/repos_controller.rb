@@ -7,8 +7,7 @@ class ReposController < ApplicationController
   private
 
   def load_repos_by_organization
-    @repos_by_organization = current_user.repos.
-      select("repos.*", "memberships.admin AS current_user_admin").
+    @repos_by_organization = current_user.repos.with_membership_status.
       order("memberships.admin DESC").
       order(active: :desc).
       order("LOWER(name) ASC").

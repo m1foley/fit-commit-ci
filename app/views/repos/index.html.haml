@@ -5,14 +5,5 @@
         = organization
     %section.repo_listing
       %ul.repos
-      - repos.each do |repo|
-        %li.repo
-          .repo-name
-            = repo.name
-          .repo-activation-toggle
-            - if repo.current_user_admin?
-              %button.repo-toggle
-                Activate
-            - else
-              .repo-restricted
-                Only repo admins can activate
+        - repos.each do |repo|
+          = render(repo)

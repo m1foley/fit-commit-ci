@@ -77,3 +77,9 @@ Layout/AlignHash:
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
+
+Style/GuardClause:
+  Enabled: false
+
+Style/SignalException:
+  EnforcedStyle: semantic

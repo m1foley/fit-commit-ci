@@ -1,0 +1,10 @@
+%li.repo{ id: dom_id(repo) }
+  .repo-name
+    = repo.name
+  .repo-activation-toggle
+    - if repo.admin_membership?
+      = form_with(model: repo, url: repo_activation_path(repo), method: :post) do |form|
+        = form.submit "Activate", class: "repo-toggle"
+    - else
+      .repo-restricted
+        Only repo admins can activate
