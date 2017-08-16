@@ -6,6 +6,7 @@ class ActivateRepo
 
   def call
     fail NotImplementedError, "Private repos not yet supported" if repo.private?
+    repo.update!(active: !repo.active?)
   end
 
   private

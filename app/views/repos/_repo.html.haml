@@ -1,10 +1,13 @@
-%li.repo{ id: dom_id(repo) }
+%li.repo{ id: dom_id(repo), class: ("repo--active" if repo.active?) }
   .repo-name
     = repo.name
   .repo-activation-toggle
-    - if repo.admin_membership?
-      = form_with(model: repo, url: repo_activation_path(repo), method: :post) do |form|
-        = form.submit "Activate", class: "repo-toggle"
-    - else
+    - if !repo.admin_membership?
       .repo-restricted
         Only repo admins can activate
+    - elsif repo.active?
+      = form_with(model: repo, url: repo_activation_path(repo), method: :post) do |form|
+        = form.submit "Active", class: "repo-toggle", onmouseover: "this.value='Deactivate';", onmouseout: "this.value='Active';"
+    - else
+      = form_with(model: repo, url: repo_activation_path(repo), method: :post) do |form|
+        = form.submit "Activate", class: "repo-toggle"
