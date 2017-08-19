@@ -1,6 +1,4 @@
 class SyncRepos
-  GITHUB_ORGANIZATION_TYPE = "Organization".freeze
-
   def initialize(user)
     self.user = user
   end
@@ -16,7 +14,11 @@ class SyncRepos
   attr_accessor :user, :remote_repo_hashes
 
   def fetch_remote_repo_hashes
-    self.remote_repo_hashes = github_client.repos
+    self.remote_repo_hashes = github_api.repos
+  end
+
+  def github_api
+    GithubApi.new(user.github_token)
   end
 
   def delete_user_memberships
@@ -51,15 +53,11 @@ class SyncRepos
     Rails.logger.error("Error creating membership: #{e.inspect} #{e.backtrace}")
   end
 
-  def github_client
-    Octokit::Client.new(access_token: user.github_token, auto_paginate: true)
-  end
-
   def upsert_owner(owner_attributes)
     owner = Owner.find_or_initialize_by(github_id: owner_attributes[:id])
     attrs = {
       name: owner_attributes[:login],
-      organization: (owner_attributes[:type] == GITHUB_ORGANIZATION_TYPE)
+      organization: (owner_attributes[:type] == GithubApi::ORGANIZATION_TYPE)
     }
 
     if owner.update(attrs)
@@ -75,7 +73,7 @@ class SyncRepos
     attrs = {
       private: remote_repo_hash[:private],
       name: remote_repo_hash[:full_name],
-      in_organization: remote_repo_hash[:owner][:type] == GITHUB_ORGANIZATION_TYPE,
+      in_organization: remote_repo_hash[:owner][:type] == GithubApi::ORGANIZATION_TYPE,
       owner: owner
     }
 

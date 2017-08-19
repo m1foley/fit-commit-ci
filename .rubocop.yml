@@ -83,3 +83,9 @@ Style/GuardClause:
 
 Style/SignalException:
   EnforcedStyle: semantic
+
+Rails/Delegate:
+  Enabled: false
+
+Style/BracesAroundHashParameters:
+  EnforcedStyle: context_dependent
