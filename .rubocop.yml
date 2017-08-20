@@ -44,6 +44,8 @@ Layout/SpaceInsideBrackets:
 
 Metrics/LineLength:
   Max: 100
+  Exclude:
+    - "test/**/*"
 
 Metrics/MethodLength:
   Max: 20
