@@ -2,3 +2,7 @@ brian_brian_repo_1:
   user: brian
   repo: brian_repo_1
   admin: true
+brian_brian_private_repo:
+  user: brian
+  repo: brian_private_repo
+  admin: true

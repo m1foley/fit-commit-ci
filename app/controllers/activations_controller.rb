@@ -3,7 +3,10 @@ class ActivationsController < ApplicationController
   before_action :ensure_repo_allowed
 
   def create
-    ActivateRepo.new(@repo, current_user.github_token).call
+    if !ActivateRepo.new(@repo, current_user.github_token).call
+      flash[:error] = "There was an error activating #{@repo.name}."
+      redirect_to :repos
+    end
   end
 
   private

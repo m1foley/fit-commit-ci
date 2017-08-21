@@ -22,4 +22,9 @@ class ActionDispatch::IntegrationTest
     )
     get auth_github_callback_url
   end
+
+  def assert_turbolinks_redirect(url)
+    assert_equal "text/javascript", @response.content_type
+    assert_match(/Turbolinks\.visit\("#{url}", {"action":"replace"}\)/, @response.body)
+  end
 end

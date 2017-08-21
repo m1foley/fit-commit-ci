@@ -6,3 +6,11 @@ brian_repo_1:
   in_organization: false
   owner: brian_owner
   hook_id: null
+brian_private_repo:
+  github_id: 1001
+  name: "brian/my_private_repo"
+  private: true
+  active: false
+  in_organization: false
+  owner: brian_owner
+  hook_id: null

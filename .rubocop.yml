@@ -91,3 +91,6 @@ Rails/Delegate:
 
 Style/BracesAroundHashParameters:
   EnforcedStyle: context_dependent
+
+Style/NegatedIf:
+  Enabled: false
