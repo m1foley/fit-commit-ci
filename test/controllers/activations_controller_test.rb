@@ -3,7 +3,7 @@ require "test_helper"
 class ActivationsControllerTest < ActionDispatch::IntegrationTest
   def test_success
     user = users(:brian)
-    repo = repos(:brian_repo_1)
+    repo = repos(:brian_inactive_repo)
     sign_in_as(user)
     hook_id = stub_github_create_hook(repo)
 
@@ -19,7 +19,7 @@ class ActivationsControllerTest < ActionDispatch::IntegrationTest
 
   def test_activation_fail
     user = users(:brian)
-    repo = repos(:brian_repo_1)
+    repo = repos(:brian_inactive_repo)
     sign_in_as(user)
     stub_github_create_hook_fail(repo, "Error123")
 

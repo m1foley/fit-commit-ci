@@ -27,6 +27,13 @@ class GithubApi
     end
   end
 
+  def remove_hook(full_repo_name, hook_id)
+    client.remove_hook(full_repo_name, hook_id)
+  rescue Octokit::Error => e
+    Rails.logger.error("Error removing hook #{hook_id} for #{full_repo_name}: #{e.inspect}")
+    raise
+  end
+
   private
 
   attr_accessor :token

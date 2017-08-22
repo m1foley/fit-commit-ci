@@ -12,6 +12,16 @@ class ActivationsController < ApplicationController
     end
   end
 
+  def destroy
+    deactivator = DeactivateRepo.new(@repo, current_user.github_token)
+    if deactivator.call
+      render :reload_repo
+    else
+      flash[:error] = deactivator.error_messages_formatted
+      redirect_to :repos
+    end
+  end
+
   private
 
   def load_repo

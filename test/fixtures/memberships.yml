@@ -1,6 +1,6 @@
-brian_brian_repo_1:
+brian_brian_inactive_repo:
   user: brian
-  repo: brian_repo_1
+  repo: brian_inactive_repo
   admin: true
 brian_brian_private_repo:
   user: brian

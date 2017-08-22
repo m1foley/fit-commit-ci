@@ -51,4 +51,29 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
     hook = GithubApi.new(token).create_hook(full_repo_name, callback_endpoint)
     assert_equal 132, hook.id
   end
+
+  def test_remove_hook_error
+    token = "theghtoken"
+    repo = repos(:brian_active_repo)
+
+    stub_request(:delete, "https://api.github.com/repos/#{repo.name}/hooks/#{repo.hook_id}").
+      with(headers: { "Authorization" => "token #{token}" }).
+      to_return(status: 400, body: "The error msg")
+
+    assert_raise(Octokit::Error, "The error msg") do
+      GithubApi.new(token).remove_hook(repo.name, repo.hook_id)
+    end
+  end
+
+  def test_remove_hook_success
+    token = "theghtoken"
+    repo = repos(:brian_active_repo)
+
+    stub_request(:delete, "https://api.github.com/repos/#{repo.name}/hooks/#{repo.hook_id}").
+      with(headers: { "Authorization" => "token #{token}" }).
+      to_return(status: 204)
+
+    success = GithubApi.new(token).remove_hook(repo.name, repo.hook_id)
+    assert success
+  end
 end

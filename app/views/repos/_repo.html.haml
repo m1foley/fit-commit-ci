@@ -6,7 +6,7 @@
       .repo-restricted
         Only repo admins can activate
     - elsif repo.active?
-      = form_with(model: repo, url: repo_activation_path(repo), method: :post) do |form|
+      = form_with(model: repo, url: repo_activation_path(repo), method: :delete) do |form|
         = form.submit "Active", class: "repo-toggle", onmouseover: "this.value='Deactivate';", onmouseout: "this.value='Active';"
     - else
       = form_with(model: repo, url: repo_activation_path(repo), method: :post) do |form|
