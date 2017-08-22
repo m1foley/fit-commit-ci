@@ -10,9 +10,11 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
       with(
         body: %({"name":"web","config":{"url":"#{callback_endpoint}"},"events":["pull_request"],"active":true}),
         headers: { "Authorization" => "token #{token}" }).
-      to_return(status: 400, body: "")
-    hook = GithubApi.new(token).create_hook(full_repo_name, callback_endpoint)
-    assert !hook
+      to_return(status: 400, body: "The error msg")
+
+    assert_raise(Octokit::Error, "The error msg") do
+      GithubApi.new(token).create_hook(full_repo_name, callback_endpoint)
+    end
   end
 
   def test_create_hook_already_exists
@@ -25,8 +27,10 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
         body: %({"name":"web","config":{"url":"#{callback_endpoint}"},"events":["pull_request"],"active":true}),
         headers: { "Authorization" => "token #{token}" }).
       to_return(status: 422, body: "Hook already exists")
-    hook = GithubApi.new(token).create_hook(full_repo_name, callback_endpoint)
-    assert_equal :hook_already_exists, hook
+
+    assert_raise(GithubApi::HookAlreadyExists, "Hook already exists") do
+      GithubApi.new(token).create_hook(full_repo_name, callback_endpoint)
+    end
   end
 
   def test_create_hook_success
@@ -43,6 +47,7 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
         body: "{\"id\":132}",
         headers: { "Content-Type" => "application/json; charset=utf-8" }
       )
+
     hook = GithubApi.new(token).create_hook(full_repo_name, callback_endpoint)
     assert_equal 132, hook.id
   end

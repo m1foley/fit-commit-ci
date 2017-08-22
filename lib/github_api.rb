@@ -1,5 +1,6 @@
 class GithubApi
   ORGANIZATION_TYPE = "Organization".freeze
+  HookAlreadyExists = Class.new(StandardError)
 
   def initialize(token)
     self.token = token
@@ -19,10 +20,10 @@ class GithubApi
   rescue Octokit::Error => e
     if e.message.include?("Hook already exists")
       Rails.logger.info("Hook already exists: #{full_repo_name}")
-      :hook_already_exists
+      raise HookAlreadyExists, e
     else
       Rails.logger.error("Error creating hook for #{full_repo_name}: #{e.inspect}")
-      false
+      raise
     end
   end
 

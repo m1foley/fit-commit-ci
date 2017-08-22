@@ -1,4 +1,6 @@
 class ActivateRepo
+  include ActiveModel::Model
+
   def initialize(repo, github_token)
     self.repo = repo
     self.github_token = github_token
@@ -15,8 +17,12 @@ class ActivateRepo
 
   def create_webhook
     hook = github_api.create_hook(repo.name, builds_url)
-    return hook if !hook || hook == :hook_already_exists
     repo.update(hook_id: hook.id)
+  rescue GithubApi::HookAlreadyExists
+    true
+  rescue Octokit::Error => e
+    errors.add(:base, e.message)
+    false
   end
 
   def builds_url

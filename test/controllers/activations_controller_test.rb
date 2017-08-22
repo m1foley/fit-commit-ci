@@ -21,11 +21,11 @@ class ActivationsControllerTest < ActionDispatch::IntegrationTest
     user = users(:brian)
     repo = repos(:brian_repo_1)
     sign_in_as(user)
-    stub_github_create_hook_fail(repo)
+    stub_github_create_hook_fail(repo, "Error123")
 
     post repo_activation_url(repo), xhr: true
     assert_turbolinks_redirect(repos_url)
-    assert flash[:error].present?
+    assert_equal "POST https://api.github.com/repos/#{repo.name}/hooks: 400 - Error123", flash[:error]
     repo.reload
     assert_nil repo.hook_id
     assert !repo.active?

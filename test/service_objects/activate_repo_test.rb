@@ -7,10 +7,16 @@ class ActivateRepoTest < ActiveSupport::TestCase
 
   def test_activate_public_repo_hook_fails_to_create
     repo = repos(:brian_repo_1)
+    error = Octokit::TooManyRequests.new(method: :post, url: "https://theurl",
+      status: 403, body: "Rate limit exceeded")
     GithubApi.any_instance.expects(:create_hook).with(repo.name, callback_url).
-      returns(false)
-    success = ActivateRepo.new(repo, "ghtoken").call
+      raises(error)
+
+    activator = ActivateRepo.new(repo, "ghtoken")
+    success = activator.call
     assert !success
+    assert_equal "POST https://theurl: 403 - Rate limit exceeded",
+      activator.error_messages_formatted
     repo.reload
     assert !repo.active?
     assert_nil repo.hook_id
@@ -19,7 +25,7 @@ class ActivateRepoTest < ActiveSupport::TestCase
   def test_activate_public_repo_hook_already_exists
     repo = repos(:brian_repo_1)
     GithubApi.any_instance.expects(:create_hook).with(repo.name, callback_url).
-      returns(:hook_already_exists)
+      raises(GithubApi::HookAlreadyExists)
     success = ActivateRepo.new(repo, "ghtoken").call
     assert success
     repo.reload

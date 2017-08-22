@@ -15,8 +15,8 @@ module GithubApiHelper
     hook_id
   end
 
-  def stub_github_create_hook_fail(repo)
+  def stub_github_create_hook_fail(repo, error_message)
     stub_request(:post, "https://api.github.com/repos/#{repo.name}/hooks").
-      to_return(status: 400, body: "Error")
+      to_return(status: 400, body: error_message)
   end
 end
