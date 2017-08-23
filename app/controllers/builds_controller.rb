@@ -1,12 +1,8 @@
 class BuildsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create]
-  skip_before_action :require_signin, only: [:create]
-
-  def index
-    head :no_content
-  end
+  skip_before_action :verify_authenticity_token
+  skip_before_action :require_signin
 
   def create
-    head :no_content
+    head :ok
   end
 end
