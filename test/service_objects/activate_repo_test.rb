@@ -33,6 +33,22 @@ class ActivateRepoTest < ActiveSupport::TestCase
     assert_nil repo.hook_id
   end
 
+  def test_activate_public_repo_model_update_failure
+    repo = repos(:brian_inactive_repo)
+    # unrealistic scenario to make the model update fail with a validation
+    GithubApi.any_instance.expects(:create_hook).with(repo.name, callback_url).
+      returns(Struct.new(:id).new(-1))
+
+    activator = ActivateRepo.new(repo, "ghtoken")
+    success = activator.call
+    assert !success
+    assert_equal "Hook must be greater than 0",
+      activator.error_messages_formatted
+    repo.reload
+    assert !repo.active?
+    assert_nil repo.hook_id
+  end
+
   def test_activate_public_repo
     repo = repos(:brian_inactive_repo)
     GithubApi.any_instance.expects(:create_hook).with(repo.name, callback_url).

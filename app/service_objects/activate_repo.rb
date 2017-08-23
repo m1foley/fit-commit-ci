@@ -8,7 +8,7 @@ class ActivateRepo
 
   def call
     fail NotImplementedError, "Private repos not yet supported" if repo.private?
-    create_webhook && repo.update(active: true)
+    create_webhook && update_repo
   end
 
   private
@@ -17,7 +17,12 @@ class ActivateRepo
 
   def create_webhook
     hook = github_api.create_hook(repo.name, builds_url)
-    repo.update(hook_id: hook.id)
+    if repo.update(hook_id: hook.id)
+      true
+    else
+      add_errors_from(repo)
+      false
+    end
   rescue GithubApi::HookAlreadyExists
     true
   rescue Octokit::Error => e
@@ -28,6 +33,15 @@ class ActivateRepo
   def builds_url
     Rails.application.routes.url_helpers.builds_url(
       host: ENV.fetch("HOST"), protocol: ENV.fetch("PROTOCOL"))
+  end
+
+  def update_repo
+    if repo.update(active: true)
+      true
+    else
+      add_errors_from(repo)
+      false
+    end
   end
 
   def github_api

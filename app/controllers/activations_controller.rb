@@ -7,7 +7,8 @@ class ActivationsController < ApplicationController
     if activator.call
       render :reload_repo
     else
-      flash[:error] = activator.error_messages_formatted
+      flash[:error] =
+        activator.error_messages_formatted.presence || "Activation error"
       redirect_to :repos
     end
   end
@@ -17,7 +18,8 @@ class ActivationsController < ApplicationController
     if deactivator.call
       render :reload_repo
     else
-      flash[:error] = deactivator.error_messages_formatted
+      flash[:error] =
+        deactivator.error_messages_formatted.presence || "Deactivation error"
       redirect_to :repos
     end
   end

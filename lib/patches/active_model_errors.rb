@@ -3,4 +3,12 @@ module ActiveModel::Validations::HelperMethods
   def error_messages_formatted
     errors.full_messages.uniq.join(", ")
   end
+
+  def add_errors_from(*objects)
+    objects.compact.each do |object|
+      object.errors.each do |name, message|
+        errors.add(name, message)
+      end
+    end
+  end
 end

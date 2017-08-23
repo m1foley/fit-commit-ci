@@ -8,7 +8,7 @@ class DeactivateRepo
 
   def call
     fail NotImplementedError, "Private repos not yet supported" if repo.private?
-    remove_webhook && repo.update(hook_id: nil, active: false)
+    remove_webhook && update_repo
   end
 
   private
@@ -16,10 +16,24 @@ class DeactivateRepo
   attr_accessor :repo, :github_token
 
   def remove_webhook
-    github_api.remove_hook(repo.name, repo.hook_id)
+    if github_api.remove_hook(repo.name, repo.hook_id)
+      true
+    else
+      errors.add(:base, "The hook was not able to be removed. There might be a syncing error.")
+      false
+    end
   rescue Octokit::Error => e
     errors.add(:base, e.message)
     false
+  end
+
+  def update_repo
+    if repo.update(hook_id: nil, active: false)
+      true
+    else
+      add_errors_from(repo)
+      false
+    end
   end
 
   def github_api

@@ -5,6 +5,7 @@ class Repo < ApplicationRecord
 
   validates :github_id, uniqueness: true, presence: true,
     numericality: { greater_than: 0 }
+  validates :hook_id, numericality: { greater_than: 0 }, allow_nil: true
 
   def organization
     name.split("/").first
