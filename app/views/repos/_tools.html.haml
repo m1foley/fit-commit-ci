@@ -1,0 +1,6 @@
+.repo-tools
+  .repo-tools-refresh
+    -# %button.repo-tools-refresh-button
+    -#   Refresh repo list
+    = form_with(url: repo_syncs_path, method: :post) do |form|
+      = form.submit "Refresh repo list", class: "repo-tools-refresh-button"

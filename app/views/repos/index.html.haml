@@ -1,9 +1,11 @@
-- @repos_by_organization.each do |organization, repos|
-  .organization
-    %header.organization-header
-      %h2.organization-header-title
-        = organization
-    %section.repo_listing
-      %ul.repos
-        - repos.each do |repo|
-          = render(repo)
+= render partial: "tools"
+%section.organizations
+  - @repos_by_organization.each do |organization, repos|
+    .organization
+      %header.organization-header
+        %h2.organization-header-title
+          = organization
+      %section.repo_listing
+        %ul.repos
+          - repos.each do |repo|
+            = render(repo)

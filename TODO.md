@@ -1,3 +1,4 @@
-- builds index
+- Builds index
 - `force_https`
-- handle invalid credentals on login
+- Handle invalid credentals on login
+- Change repo syncing to be async
