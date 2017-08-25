@@ -15,11 +15,27 @@ class GithubPayload
     pull_request.present?
   end
 
+  def github_repo_id
+    repository["id"]
+  end
+
+  def full_repo_name
+    repository["full_name"]
+  end
+
+  def private_repo?
+    repository["private"]
+  end
+
   private
 
   attr_accessor :data
 
   def pull_request
     data.fetch("pull_request", {})
+  end
+
+  def repository
+    data["repository"]
   end
 end

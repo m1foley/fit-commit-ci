@@ -11,6 +11,10 @@ class Repo < ApplicationRecord
     name.split("/").first
   end
 
+  def self.active
+    where(active: true)
+  end
+
   def self.with_membership_status
     select("repos.*", "memberships.admin AS admin_membership")
   end

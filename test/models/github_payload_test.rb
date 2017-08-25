@@ -47,4 +47,11 @@ class GithubPayloadTest < ActiveSupport::TestCase
     payload = GithubPayload.new(confirmation_ping_json)
     assert payload.confirmation_ping?
   end
+
+  def test_repo_attributes
+    payload = GithubPayload.new(pull_request_opened_json)
+    assert_equal 101233233, payload.github_repo_id
+    assert_equal "m1foley/fcci_test", payload.full_repo_name
+    assert !payload.private_repo?
+  end
 end
