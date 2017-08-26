@@ -54,4 +54,11 @@ class GithubPayloadTest < ActiveSupport::TestCase
     assert_equal "m1foley/fcci_test", payload.full_repo_name
     assert !payload.private_repo?
   end
+
+  def test_owner_attributes
+    payload = GithubPayload.new(pull_request_opened_json)
+    assert_equal 199775, payload.repository_owner_id
+    assert_equal "m1foley", payload.repository_owner_name
+    assert !payload.repository_owner_is_organization?
+  end
 end

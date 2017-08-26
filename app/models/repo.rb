@@ -18,4 +18,21 @@ class Repo < ApplicationRecord
   def self.with_membership_status
     select("repos.*", "memberships.admin AS admin_membership")
   end
+
+  def self.upsert(github_id:, private:, name:, in_organization:, owner:)
+    repo = find_or_initialize_by(github_id: github_id)
+    attrs = {
+      private: private,
+      name: name,
+      in_organization: in_organization,
+      owner: owner
+    }
+
+    if repo.update(attrs)
+      repo
+    else
+      Rails.logger.error("Error upserting repo: #{repo.error_messages_formatted}")
+      nil
+    end
+  end
 end

@@ -27,6 +27,18 @@ class GithubPayload
     repository["private"]
   end
 
+  def repository_owner_id
+    owner["id"]
+  end
+
+  def repository_owner_name
+    owner["login"]
+  end
+
+  def repository_owner_is_organization?
+    owner["type"] == GithubApi::ORGANIZATION_TYPE
+  end
+
   private
 
   attr_accessor :data
@@ -37,5 +49,9 @@ class GithubPayload
 
   def repository
     data["repository"]
+  end
+
+  def owner
+    repository["owner"]
   end
 end

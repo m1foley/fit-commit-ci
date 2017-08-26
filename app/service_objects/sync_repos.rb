@@ -54,34 +54,20 @@ class SyncRepos
   end
 
   def upsert_owner(owner_attributes)
-    owner = Owner.find_or_initialize_by(github_id: owner_attributes[:id])
-    attrs = {
+    Owner.upsert(
+      github_id: owner_attributes[:id],
       name: owner_attributes[:login],
       organization: (owner_attributes[:type] == GithubApi::ORGANIZATION_TYPE)
-    }
-
-    if owner.update(attrs)
-      owner
-    else
-      Rails.logger.error("Error upserting owner: #{owner.error_messages_formatted}")
-      nil
-    end
+    )
   end
 
   def upsert_repo(remote_repo_hash, owner)
-    repo = Repo.find_or_initialize_by(github_id: remote_repo_hash[:id])
-    attrs = {
+    Repo.upsert(
+      github_id: remote_repo_hash[:id],
       private: remote_repo_hash[:private],
       name: remote_repo_hash[:full_name],
       in_organization: remote_repo_hash[:owner][:type] == GithubApi::ORGANIZATION_TYPE,
       owner: owner
-    }
-
-    if repo.update(attrs)
-      repo
-    else
-      Rails.logger.error("Error upserting repo: #{repo.error_messages_formatted}")
-      nil
-    end
+    )
   end
 end
