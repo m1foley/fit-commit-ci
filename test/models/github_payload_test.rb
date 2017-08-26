@@ -61,4 +61,9 @@ class GithubPayloadTest < ActiveSupport::TestCase
     assert_equal "m1foley", payload.repository_owner_name
     assert !payload.repository_owner_is_organization?
   end
+
+  def test_action
+    payload = GithubPayload.new(pull_request_synced_json)
+    assert_equal "synchronize", payload.action
+  end
 end

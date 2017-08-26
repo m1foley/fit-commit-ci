@@ -39,6 +39,10 @@ class GithubPayload
     owner["type"] == GithubApi::ORGANIZATION_TYPE
   end
 
+  def action
+    data["action"]
+  end
+
   private
 
   attr_accessor :data
