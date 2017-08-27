@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class PullRequest
-  OPEN_ACTION = "opened".freeze
-  SYNC_ACTION = "synchronize".freeze
+  OPEN_ACTION = "opened"
+  SYNC_ACTION = "synchronize"
 
   def initialize(github_payload)
     self.github_payload = github_payload
