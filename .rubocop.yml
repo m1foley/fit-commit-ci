@@ -44,7 +44,7 @@ Layout/SpaceInsideBrackets:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 100
+  Max: 120
   Exclude:
     - "test/**/*"
 
@@ -102,3 +102,6 @@ Style/NumericLiterals:
 Metrics/ClassLength:
   Exclude:
     - "test/**/*"
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

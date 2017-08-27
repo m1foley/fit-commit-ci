@@ -35,4 +35,8 @@ class Repo < ApplicationRecord
       nil
     end
   end
+
+  def remove_membership(user)
+    users.destroy(user)
+  end
 end
