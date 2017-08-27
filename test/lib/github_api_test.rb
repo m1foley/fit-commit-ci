@@ -135,4 +135,26 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
     status = GithubApi.new(token).create_error_status(full_repo_name, sha, description)
     assert_equal 132, status.id
   end
+
+  def test_repository_true
+    token = "theghtoken"
+    full_repo_name = "foo/bar"
+
+    stub_request(:get, "https://api.github.com/repos/#{full_repo_name}").
+      with(headers: { "Authorization" => "token #{token}" }).
+      to_return(status: 200)
+
+    assert GithubApi.new(token).repository?(full_repo_name)
+  end
+
+  def test_repository_false
+    token = "theghtoken"
+    full_repo_name = "foo/bar"
+
+    stub_request(:get, "https://api.github.com/repos/#{full_repo_name}").
+      with(headers: { "Authorization" => "token #{token}" }).
+      to_return(status: 404)
+
+    assert !GithubApi.new(token).repository?(full_repo_name)
+  end
 end

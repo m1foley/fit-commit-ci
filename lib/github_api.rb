@@ -67,6 +67,12 @@ class GithubApi
     )
   end
 
+  def repository?(full_repo_name)
+    client.repository?(full_repo_name)
+  rescue Octokit::Unauthorized
+    false
+  end
+
   private
 
   attr_accessor :token
