@@ -1,5 +1,11 @@
+# frozen_string_literal: true
+
 class GithubApi
-  ORGANIZATION_TYPE = "Organization".freeze
+  ORGANIZATION_TYPE = "Organization"
+  STATUS_CONTEXT = "Fit Commit CI"
+  PENDING_STATUS = "pending"
+  SUCCESS_STATUS = "success"
+  ERROR_STATUS = "error"
   HookAlreadyExists = Class.new(StandardError)
 
   def initialize(token)
@@ -34,11 +40,48 @@ class GithubApi
     raise
   end
 
+  def create_pending_status(full_repo_name, sha, description)
+    create_status(
+      full_repo_name,
+      sha,
+      PENDING_STATUS,
+      description
+    )
+  end
+
+  def create_success_status(full_repo_name, sha, description)
+    create_status(
+      full_repo_name,
+      sha,
+      SUCCESS_STATUS,
+      description
+    )
+  end
+
+  def create_error_status(full_repo_name, sha, description)
+    create_status(
+      full_repo_name,
+      sha,
+      ERROR_STATUS,
+      description
+    )
+  end
+
   private
 
   attr_accessor :token
 
   def client
     @client ||= Octokit::Client.new(access_token: token, auto_paginate: true)
+  end
+
+  def create_status(repo, sha, state, description)
+    client.create_status(
+      repo,
+      sha,
+      state,
+      context: STATUS_CONTEXT,
+      description: description
+    )
   end
 end

@@ -1,6 +1,7 @@
 AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
+  TargetRubyVersion: 2.4
   Include:
     - "**/Rakefile"
     - "**/config.ru"
@@ -97,3 +98,7 @@ Style/NegatedIf:
 
 Style/NumericLiterals:
   Enabled: false
+
+Metrics/ClassLength:
+  Exclude:
+    - "test/**/*"

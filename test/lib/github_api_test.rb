@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class ActiveModelErrorsTest < ActiveSupport::TestCase
@@ -75,5 +77,62 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
 
     success = GithubApi.new(token).remove_hook(repo.name, repo.hook_id)
     assert success
+  end
+
+  def test_create_pending_status
+    token = "theghtoken"
+    full_repo_name = "foo/bar"
+    sha = "feedafacebeef"
+    description = "The description"
+    stub_request(:post, "https://api.github.com/repos/#{full_repo_name}/statuses/#{sha}").
+      with(
+        body: %({"context":"Fit Commit CI","description":"#{description}","state":"pending"}),
+        headers: { "Authorization" => "token #{token}" }).
+      to_return(
+        status: 201,
+        body: "{\"id\":132}",
+        headers: { "Content-Type" => "application/json; charset=utf-8" }
+      )
+
+    status = GithubApi.new(token).create_pending_status(full_repo_name, sha, description)
+    assert_equal 132, status.id
+  end
+
+  def test_create_success_status
+    token = "theghtoken"
+    full_repo_name = "foo/bar"
+    sha = "feedafacebeef"
+    description = "The description"
+    stub_request(:post, "https://api.github.com/repos/#{full_repo_name}/statuses/#{sha}").
+      with(
+        body: %({"context":"Fit Commit CI","description":"#{description}","state":"success"}),
+        headers: { "Authorization" => "token #{token}" }).
+      to_return(
+        status: 201,
+        body: "{\"id\":132}",
+        headers: { "Content-Type" => "application/json; charset=utf-8" }
+      )
+
+    status = GithubApi.new(token).create_success_status(full_repo_name, sha, description)
+    assert_equal 132, status.id
+  end
+
+  def test_create_error_status
+    token = "theghtoken"
+    full_repo_name = "foo/bar"
+    sha = "feedafacebeef"
+    description = "The description"
+    stub_request(:post, "https://api.github.com/repos/#{full_repo_name}/statuses/#{sha}").
+      with(
+        body: %({"context":"Fit Commit CI","description":"#{description}","state":"error"}),
+        headers: { "Authorization" => "token #{token}" }).
+      to_return(
+        status: 201,
+        body: "{\"id\":132}",
+        headers: { "Content-Type" => "application/json; charset=utf-8" }
+      )
+
+    status = GithubApi.new(token).create_error_status(full_repo_name, sha, description)
+    assert_equal 132, status.id
   end
 end
