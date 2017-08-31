@@ -66,4 +66,10 @@ class GithubPayloadTest < ActiveSupport::TestCase
     payload = GithubPayload.new(pull_request_synced_json)
     assert_equal "synchronize", payload.action
   end
+
+  def test_head_sha
+    payload = GithubPayload.new(pull_request_opened_json)
+    assert_equal "e6a4ccf95262cf5c73ac5786d49a82240b1f1157", payload.head_sha
+    assert_nil GithubPayload.new("{}").head_sha
+  end
 end

@@ -15,6 +15,10 @@ class GithubPayload
     pull_request.present?
   end
 
+  def head_sha
+    pull_request.fetch("head", {})["sha"]
+  end
+
   def github_repo_id
     repository["id"]
   end
