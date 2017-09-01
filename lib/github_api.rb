@@ -17,26 +17,31 @@ class GithubApi
   end
 
   def create_hook(full_repo_name, callback_endpoint)
+    Rails.logger.info("Creating hook. Repo: #{full_repo_name}, URL: #{callback_endpoint}")
     client.create_hook(
       full_repo_name,
       "web",
       { url: callback_endpoint },
       { events: [ "pull_request" ], active: true }
     )
-  rescue Octokit::Error => e
+  rescue Octokit::UnprocessableEntity => e
     if e.message.include?("Hook already exists")
-      Rails.logger.info("Hook already exists: #{full_repo_name}")
+      Rails.logger.info(e.message)
       raise HookAlreadyExists, e
     else
-      Rails.logger.error("Error creating hook for #{full_repo_name}: #{e.inspect}")
+      Rails.logger.error("Error creating hook: #{e.inspect}")
       raise
     end
+  rescue Octokit::Error => e
+    Rails.logger.error("Error creating hook: #{e.inspect}")
+    raise
   end
 
   def remove_hook(full_repo_name, hook_id)
+    Rails.logger.info("Removing hook #{hook_id} for repo #{full_repo_name}")
     client.remove_hook(full_repo_name, hook_id)
   rescue Octokit::Error => e
-    Rails.logger.error("Error removing hook #{hook_id} for #{full_repo_name}: #{e.inspect}")
+    Rails.logger.error("Error removing hook: #{e.inspect}")
     raise
   end
 
@@ -81,9 +86,12 @@ class GithubApi
     @client ||= Octokit::Client.new(access_token: token, auto_paginate: true)
   end
 
-  def create_status(repo, sha, state, description)
+  def create_status(full_repo_name, sha, state, description)
+    Rails.logger.info(format("Creating GitHub status. Repo: %s, SHA: %s, state: %s, description: %s",
+      full_repo_name, sha, state, description))
+
     client.create_status(
-      repo,
+      full_repo_name,
       sha,
       state,
       context: STATUS_CONTEXT,
