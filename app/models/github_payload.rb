@@ -47,6 +47,10 @@ class GithubPayload
     data["action"]
   end
 
+  def pull_request_number
+    data["number"]
+  end
+
   private
 
   attr_accessor :data
@@ -56,7 +60,7 @@ class GithubPayload
   end
 
   def repository
-    data["repository"]
+    data.fetch("repository", {})
   end
 
   def owner
