@@ -10,11 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170902190408) do
+ActiveRecord::Schema.define(version: 20170902191439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "builds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "repo_id", null: false
+    t.uuid "user_id"
+    t.integer "pull_request_number", null: false
+    t.string "head_sha", null: false
+    t.integer "warning_count", default: 0, null: false
+    t.integer "error_count", default: 0, null: false
+    t.text "details"
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["repo_id"], name: "index_builds_on_repo_id"
+  end
 
   create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
@@ -59,6 +73,8 @@ ActiveRecord::Schema.define(version: 20170902190408) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "builds", "repos"
+  add_foreign_key "builds", "users"
   add_foreign_key "memberships", "repos"
   add_foreign_key "memberships", "users"
   add_foreign_key "repos", "owners"

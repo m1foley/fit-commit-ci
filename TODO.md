@@ -2,3 +2,4 @@
 - `force_https`
 - Handle invalid credentals on login
 - Change repo syncing to be async
+- Config option to fail on errors

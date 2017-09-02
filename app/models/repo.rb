@@ -2,6 +2,7 @@ class Repo < ApplicationRecord
   belongs_to :owner
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
+  has_many :builds, dependent: :destroy
 
   validates :github_id, uniqueness: true, presence: true,
     numericality: { greater_than: 0 }
