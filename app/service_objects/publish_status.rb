@@ -7,9 +7,7 @@
 # involving those commits.
 class PublishStatus
   PENDING_MESSAGE = "Fit Commit CI is reviewing commit messages..."
-  SUCCESS_MESSAGE = "All good!"
-  WARNING_MESSAGE_ONE = "Passed with 1 warning."
-  WARNING_MESSAGE_MULTI = "Passed with %<warning_count>d warnings."
+  SUCCESS_MESSAGE_CLEAN = "All good!"
 
   def initialize(repo_name, sha, github_token)
     self.repo_name = repo_name
@@ -21,8 +19,8 @@ class PublishStatus
     github_api.create_pending_status(repo_name, sha, PENDING_MESSAGE)
   end
 
-  def publish_success_status(warning_count)
-    message = success_message(warning_count)
+  def publish_success_status(warning_count, error_count)
+    message = success_message(warning_count, error_count)
     github_api.create_success_status(repo_name, sha, message)
   end
 
@@ -38,14 +36,23 @@ class PublishStatus
     @github_api ||= GithubApi.new(github_token)
   end
 
-  def success_message(warning_count)
-    case warning_count
-    when 0
-      SUCCESS_MESSAGE
-    when 1
-      WARNING_MESSAGE_ONE
+  def success_message(warning_count, error_count)
+    if warning_count == 0 && error_count == 0
+      SUCCESS_MESSAGE_CLEAN
+    elsif warning_count > 0 && error_count > 0
+      format("Passed with %s and %s.",
+        pluralize("error", error_count),
+        pluralize("warning", warning_count)
+      )
+    elsif warning_count > 0
+      format("Passed with %s.", pluralize("warning", warning_count))
     else
-      format(WARNING_MESSAGE_MULTI, warning_count: warning_count)
+      format("Passed with %s.", pluralize("error", error_count))
     end
+  end
+
+  def pluralize(word, count)
+    word += "s" if count != 1
+    format("%d %s", count, word)
   end
 end

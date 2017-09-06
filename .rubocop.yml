@@ -105,3 +105,6 @@ Metrics/ClassLength:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/NumericPredicate:
+  EnforcedStyle: comparison
