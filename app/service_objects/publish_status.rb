@@ -16,16 +16,16 @@ class PublishStatus
   end
 
   def publish_pending_status
-    github_api.create_pending_status(repo_name, sha, PENDING_MESSAGE)
+    github_api.publish_pending_status(repo_name, sha, PENDING_MESSAGE)
   end
 
   def publish_success_status(warning_count, error_count)
     message = success_message(warning_count, error_count)
-    github_api.create_success_status(repo_name, sha, message)
+    github_api.publish_success_status(repo_name, sha, message)
   end
 
   def publish_error_status(message)
-    github_api.create_error_status(repo_name, sha, message)
+    github_api.publish_error_status(repo_name, sha, message)
   end
 
   private

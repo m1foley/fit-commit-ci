@@ -45,8 +45,8 @@ class GithubApi
     raise
   end
 
-  def create_pending_status(full_repo_name, sha, description)
-    create_status(
+  def publish_pending_status(full_repo_name, sha, description)
+    publish_status(
       full_repo_name,
       sha,
       PENDING_STATUS,
@@ -54,8 +54,8 @@ class GithubApi
     )
   end
 
-  def create_success_status(full_repo_name, sha, description)
-    create_status(
+  def publish_success_status(full_repo_name, sha, description)
+    publish_status(
       full_repo_name,
       sha,
       SUCCESS_STATUS,
@@ -63,8 +63,8 @@ class GithubApi
     )
   end
 
-  def create_error_status(full_repo_name, sha, description)
-    create_status(
+  def publish_error_status(full_repo_name, sha, description)
+    publish_status(
       full_repo_name,
       sha,
       ERROR_STATUS,
@@ -86,8 +86,8 @@ class GithubApi
     @client ||= Octokit::Client.new(access_token: token, auto_paginate: true)
   end
 
-  def create_status(full_repo_name, sha, state, description)
-    Rails.logger.info(format("Creating GitHub status. Repo: %s, SHA: %s, state: %s, description: %s",
+  def publish_status(full_repo_name, sha, state, description)
+    Rails.logger.info(format("Publishing GitHub status. Repo: %s, SHA: %s, state: %s, description: %s",
       full_repo_name, sha, state, description))
 
     client.create_status(

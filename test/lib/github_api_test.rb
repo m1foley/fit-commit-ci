@@ -77,7 +77,7 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
     assert success
   end
 
-  def test_create_pending_status
+  def test_publish_pending_status
     token = "theghtoken"
     full_repo_name = "foo/bar"
     sha = "feedafacebeef"
@@ -92,11 +92,11 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
         headers: { "Content-Type" => "application/json; charset=utf-8" }
       )
 
-    status = GithubApi.new(token).create_pending_status(full_repo_name, sha, description)
+    status = GithubApi.new(token).publish_pending_status(full_repo_name, sha, description)
     assert_equal 132, status.id
   end
 
-  def test_create_success_status
+  def test_publish_success_status
     token = "theghtoken"
     full_repo_name = "foo/bar"
     sha = "feedafacebeef"
@@ -111,11 +111,11 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
         headers: { "Content-Type" => "application/json; charset=utf-8" }
       )
 
-    status = GithubApi.new(token).create_success_status(full_repo_name, sha, description)
+    status = GithubApi.new(token).publish_success_status(full_repo_name, sha, description)
     assert_equal 132, status.id
   end
 
-  def test_create_error_status
+  def test_publish_error_status
     token = "theghtoken"
     full_repo_name = "foo/bar"
     sha = "feedafacebeef"
@@ -130,7 +130,7 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
         headers: { "Content-Type" => "application/json; charset=utf-8" }
       )
 
-    status = GithubApi.new(token).create_error_status(full_repo_name, sha, description)
+    status = GithubApi.new(token).publish_error_status(full_repo_name, sha, description)
     assert_equal 132, status.id
   end
 
