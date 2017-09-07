@@ -2,3 +2,15 @@ brian_owner:
   github_id: 100
   name: "brian_ghusername"
   organization: false
+caesar_owner:
+  github_id: 101
+  name: "caesar_ghusername"
+  organization: false
+diocletian_owner:
+  github_id: 102
+  name: "diocletian_ghusername"
+  organization: false
+roman_emperors_organization:
+  github_id: 103
+  name: "roman_emperors_ghusername"
+  organization: true

@@ -21,7 +21,19 @@ class UserByRepoTest < ActiveSupport::TestCase
     github_api_mock.expects(:repository?).with(repo.name).returns(true)
     GithubApi.expects(:new).with(user.github_token).returns(github_api_mock)
 
-    user_by_repo = UserByRepo.new(repo).call
-    assert_equal user, user_by_repo
+    assert_equal user, UserByRepo.new(repo).call
+  end
+
+  def test_repo_with_multiple_users
+    user1 = users(:caesar)
+    user2 = users(:diocletian)
+    repo = repos(:roman_emperors_repo)
+    github_api_mock = mock
+    github_api_mock.expects(:repository?).with(repo.name).returns(true)
+    GithubApi.expects(:new).
+      with(any_of(user1.github_token, user2.github_token)).
+      returns(github_api_mock)
+
+    assert_includes [user1, user2], UserByRepo.new(repo).call
   end
 end

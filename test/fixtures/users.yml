@@ -9,3 +9,13 @@ brian:
   username: "brian_ghusername"
   remember_token: "brian_remember_token"
   github_token: "brian_github_token"
+# Member of the roman_emperors organization
+caesar:
+  username: "caesar_ghusername"
+  remember_token: "caesar_remember_token"
+  github_token: "caesar_github_token"
+# Another member of the roman_emperors organization
+diocletian:
+  username: "diocletian_ghusername"
+  remember_token: "diocletian_remember_token"
+  github_token: "diocletian_github_token"

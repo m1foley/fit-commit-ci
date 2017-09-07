@@ -22,3 +22,11 @@ brian_private_repo:
   in_organization: false
   owner: brian_owner
   hook_id: null
+roman_emperors_repo:
+  github_id: 1003
+  name: "roman_emperors/our_active_repo"
+  private: false
+  active: true
+  in_organization: true
+  owner: roman_emperors_organization
+  hook_id: 40071002

@@ -1,3 +1,7 @@
+brian_brian_active_repo:
+  user: brian
+  repo: brian_active_repo
+  admin: true
 brian_brian_inactive_repo:
   user: brian
   repo: brian_inactive_repo
@@ -6,3 +10,11 @@ brian_brian_private_repo:
   user: brian
   repo: brian_private_repo
   admin: true
+caesar_roman_emperors_repo:
+  user: caesar
+  repo: roman_emperors_repo
+  admin: true
+diocletian_roman_emperors_repo:
+  user: diocletian
+  repo: roman_emperors_repo
+  admin: false
