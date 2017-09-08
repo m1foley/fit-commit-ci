@@ -36,7 +36,9 @@ class ReviewPullRequestTest < ActiveSupport::TestCase
     mock_status_publisher.expects(:publish_success_status).with(1, 2)
     PublishStatus.expects(:new).with(repo.name, head_sha, user.github_token).
       returns(mock_status_publisher)
-    ReviewBuild.expects(:new).with(any_parameters).returns(mock(call: [1, 2]))
+    ReviewBuild.expects(:new).
+      with { |build| build.head_sha == head_sha }.
+      returns(mock(call: [1, 2]))
     UserByRepo.expects(:new).with(repo).returns(mock(call: user))
 
     assert_difference("Build.count", 1) do
