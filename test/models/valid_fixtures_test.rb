@@ -10,13 +10,13 @@ class ValidFixturesTest < ActiveSupport::TestCase
     assert fixture_files.present?
     fixture_files.each do |fixture_file|
       klass = File.basename(fixture_file, ".yml").classify.constantize
-      klass.all.each do |instance|
-        begin
-          assert instance.valid?, format_error(instance)
-        rescue => e
-          raise e, "#{e} #{instance.inspect}"
-        end
-      end
+      klass.all.each { |instance| assert_valid(instance) }
     end
+  end
+
+  def assert_valid(instance)
+    assert instance.valid?, format_error(instance)
+  rescue => e
+    raise e, "#{e} #{instance.inspect}"
   end
 end

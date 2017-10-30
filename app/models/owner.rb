@@ -1,5 +1,5 @@
 class Owner < ApplicationRecord
-  has_many :repos
+  has_many :repos, dependent: :nullify
   validates :github_id, uniqueness: true, presence: true
   validates :name, presence: true
 

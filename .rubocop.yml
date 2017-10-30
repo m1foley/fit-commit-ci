@@ -27,7 +27,7 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   Enabled: false
 
-Style/FileName:
+Naming/FileName:
   Exclude:
     - "Gemfile"
 
@@ -108,3 +108,6 @@ Style/FrozenStringLiteralComment:
 
 Style/NumericPredicate:
   EnforcedStyle: comparison
+
+Lint/RescueWithoutErrorClass:
+  Enabled: false
