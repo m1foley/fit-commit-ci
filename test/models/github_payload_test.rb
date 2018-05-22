@@ -20,7 +20,7 @@ class GithubPayloadTest < ActiveSupport::TestCase
   end
 
   def test_pull_request_when_empty
-    assert !empty_payload.pull_request?
+    assert_not empty_payload.pull_request?
   end
 
   def test_pull_request_when_opened
@@ -32,15 +32,15 @@ class GithubPayloadTest < ActiveSupport::TestCase
   end
 
   def test_pull_request_when_non_pr
-    assert !confirmation_ping_payload.pull_request?
+    assert_not confirmation_ping_payload.pull_request?
   end
 
   def test_confirmation_ping_false
-    assert !opened_pull_request_payload.confirmation_ping?
+    assert_not opened_pull_request_payload.confirmation_ping?
   end
 
   def test_confirmation_ping_empty
-    assert !empty_payload.confirmation_ping?
+    assert_not empty_payload.confirmation_ping?
   end
 
   def test_confirmation_ping_true
@@ -51,14 +51,14 @@ class GithubPayloadTest < ActiveSupport::TestCase
     payload = opened_pull_request_payload
     assert_equal 101233233, payload.github_repo_id
     assert_equal "m1foley/fcci_test", payload.full_repo_name
-    assert !payload.private_repo?
+    assert_not payload.private_repo?
   end
 
   def test_owner_attributes
     payload = opened_pull_request_payload
     assert_equal 199775, payload.repository_owner_id
     assert_equal "m1foley", payload.repository_owner_name
-    assert !payload.repository_owner_is_organization?
+    assert_not payload.repository_owner_is_organization?
   end
 
   def test_action

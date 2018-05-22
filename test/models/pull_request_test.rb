@@ -16,7 +16,7 @@ class PullRequestTest < ActiveSupport::TestCase
 
   def test_opened_false
     pr = PullRequest.new(synced_payload)
-    assert !pr.opened?
+    assert_not pr.opened?
   end
 
   def test_synchronize_true
@@ -26,6 +26,6 @@ class PullRequestTest < ActiveSupport::TestCase
 
   def test_synchronize_false
     pr = PullRequest.new(opened_payload)
-    assert !pr.synchronize?
+    assert_not pr.synchronize?
   end
 end

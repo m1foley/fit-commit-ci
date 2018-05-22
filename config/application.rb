@@ -7,19 +7,20 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 # Load monkey patches before Rails loads
-Dir[File.expand_path("../../lib/patches/*.rb", __FILE__)].each do |patch|
+Dir[File.expand_path("../lib/patches/*.rb", __dir__)].each do |patch|
   require patch
 end
 
 module FitCommitCi
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.1
+    config.load_defaults 5.2
 
     config.autoload_paths << Rails.root.join("lib")
 
     # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
   end
 end

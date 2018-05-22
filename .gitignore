@@ -20,9 +20,13 @@
 /node_modules
 /yarn-error.log
 
+/public/assets
 .byebug_history
 
 # Ignore encrypted secrets key file.
 config/secrets.yml.key
 
 .env.local
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key

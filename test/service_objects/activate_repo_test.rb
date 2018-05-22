@@ -14,11 +14,11 @@ class ActivateRepoTest < ActiveSupport::TestCase
 
     activator = ActivateRepo.new(repo, "ghtoken")
     success = activator.call
-    assert !success
+    assert_not success
     assert_equal "POST https://theurl: 403 - Rate limit exceeded",
       activator.error_messages_formatted
     repo.reload
-    assert !repo.active?
+    assert_not repo.active?
     assert_nil repo.hook_id
   end
 
@@ -41,11 +41,11 @@ class ActivateRepoTest < ActiveSupport::TestCase
 
     activator = ActivateRepo.new(repo, "ghtoken")
     success = activator.call
-    assert !success
+    assert_not success
     assert_equal "Hook must be greater than 0",
       activator.error_messages_formatted
     repo.reload
-    assert !repo.active?
+    assert_not repo.active?
     assert_nil repo.hook_id
   end
 

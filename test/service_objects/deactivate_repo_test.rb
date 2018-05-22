@@ -8,7 +8,7 @@ class DeactivateRepoTest < ActiveSupport::TestCase
 
     deactivator = DeactivateRepo.new(repo, "ghtoken")
     success = deactivator.call
-    assert !success
+    assert_not success
     assert_equal "The hook was not able to be removed. There might be a syncing error.",
       deactivator.error_messages_formatted
     repo.reload
@@ -25,7 +25,7 @@ class DeactivateRepoTest < ActiveSupport::TestCase
 
     deactivator = DeactivateRepo.new(repo, "ghtoken")
     success = deactivator.call
-    assert !success
+    assert_not success
     assert_equal "POST https://theurl: 403 - Rate limit exceeded",
       deactivator.error_messages_formatted
     repo.reload
@@ -36,13 +36,13 @@ class DeactivateRepoTest < ActiveSupport::TestCase
   def test_deactivate_public_repo_model_update_failure
     repo = repos(:brian_active_repo)
     # unrealistic scenario to make the model update fail with a validation
-    repo.update_attributes(github_id: -1)
+    repo.update(github_id: -1)
     GithubApi.any_instance.expects(:remove_hook).with(repo.name, repo.hook_id).
       returns(true)
 
     deactivator = DeactivateRepo.new(repo, "ghtoken")
     success = deactivator.call
-    assert !success
+    assert_not success
     assert_equal "Github must be greater than 0",
       deactivator.error_messages_formatted
     repo.reload
@@ -57,7 +57,7 @@ class DeactivateRepoTest < ActiveSupport::TestCase
     success = DeactivateRepo.new(repo, "ghtoken").call
     assert success
     repo.reload
-    assert !repo.active?
+    assert_not repo.active?
     assert_nil repo.hook_id
   end
 end

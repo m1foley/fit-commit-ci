@@ -26,16 +26,16 @@ class SyncReposTest < ActiveSupport::TestCase
     repo = Repo.order(:created_at).last
     assert_equal 123, repo.github_id
     assert_equal "alice/foo", repo.name
-    assert !repo.private?
-    assert !repo.active?
-    assert !repo.in_organization?
+    assert_not repo.private?
+    assert_not repo.active?
+    assert_not repo.in_organization?
     assert user.repos.reload.include?(repo)
 
     owner = Owner.order(:created_at).last
     assert_equal owner, repo.owner
     assert_equal 1, owner.github_id
     assert_equal user.username, owner.name
-    assert !owner.organization?
+    assert_not owner.organization?
 
     membership = Membership.order(:created_at).last
     assert membership.admin?
@@ -98,11 +98,11 @@ class SyncReposTest < ActiveSupport::TestCase
       assert_equal "alice/foo_renamed", foo_repo.name
       assert foo_repo.private?
       assert foo_repo.active?
-      assert !foo_repo.in_organization?
+      assert_not foo_repo.in_organization?
 
       assert_equal "bar/bar", bar_repo.name
       assert bar_repo.private?
-      assert !bar_repo.active?
+      assert_not bar_repo.active?
       assert bar_repo.in_organization?
 
       memberships = user.memberships.reload

@@ -10,7 +10,7 @@ class ReposController < ApplicationController
     @repos_by_organization = current_user.repos.with_membership_status.
       order("memberships.admin DESC").
       order(active: :desc).
-      order("LOWER(name) ASC").
+      order(Repo.arel_table["name"].lower.asc).
       group_by(&:organization)
   end
 end

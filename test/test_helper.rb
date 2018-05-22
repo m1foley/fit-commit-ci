@@ -1,6 +1,7 @@
-require File.expand_path("../../config/environment", __FILE__)
+ENV["RAILS_ENV"] ||= "test"
+require_relative "../config/environment"
 require "rails/test_help"
-require "mocha/mini_test"
+require "mocha/minitest"
 require "webmock/minitest"
 require_relative "helpers/github_api_helper"
 

@@ -10,8 +10,8 @@ class UserByRepoTest < ActiveSupport::TestCase
 
     user_by_repo = UserByRepo.new(repo).call
     assert_equal Rails.application.secrets.fetch(:fcci_github_token), user_by_repo.github_token
-    assert !user_by_repo.persisted?
-    assert !repo.users.include?(user)
+    assert_not user_by_repo.persisted?
+    assert_not repo.users.include?(user)
   end
 
   def test_repo_with_one_user

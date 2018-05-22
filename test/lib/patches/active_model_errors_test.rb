@@ -9,7 +9,7 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
 
   def test_error_messages_formatted
     instance = ClassWithValidations.new
-    assert !instance.valid?
+    assert_not instance.valid?
     assert_equal "Bar can't be blank, Baz can't be blank",
       instance.error_messages_formatted
   end
@@ -17,7 +17,7 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
   def test_add_errors_from
     instance1 = ClassWithValidations.new
     instance2 = ClassWithValidations.new
-    assert !instance1.valid?
+    assert_not instance1.valid?
     instance2.add_errors_from(instance1)
     assert_equal instance1.errors.full_messages, instance2.errors.full_messages
   end

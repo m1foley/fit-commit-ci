@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
   before_action :require_signin
 
   helper_method :current_user, :signed_in?
@@ -7,7 +6,7 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    @_current_user ||= find_session_user || GuestUser.new
+    @current_user ||= find_session_user || GuestUser.new
   end
 
   def find_session_user

@@ -28,7 +28,7 @@ class ActivationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "POST https://api.github.com/repos/#{repo.name}/hooks: 400 - Error123", flash[:error]
     repo.reload
     assert_nil repo.hook_id
-    assert !repo.active?
+    assert_not repo.active?
   end
 
   def test_repo_not_found

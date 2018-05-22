@@ -153,6 +153,6 @@ class ActiveModelErrorsTest < ActiveSupport::TestCase
       with(headers: { "Authorization" => "token #{token}" }).
       to_return(status: 404)
 
-    assert !GithubApi.new(token).repository?(full_repo_name)
+    assert_not GithubApi.new(token).repository?(full_repo_name)
   end
 end

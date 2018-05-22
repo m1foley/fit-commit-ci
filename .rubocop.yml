@@ -2,9 +2,6 @@ AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
   TargetRubyVersion: 2.4
-  Include:
-    - "**/Rakefile"
-    - "**/config.ru"
   Exclude:
     - "bin/**/*"
     - "db/**/*"
@@ -38,9 +35,6 @@ Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
 Style/EmptyMethod:
-  Enabled: false
-
-Layout/SpaceInsideBrackets:
   Enabled: false
 
 Metrics/LineLength:
@@ -109,5 +103,11 @@ Style/FrozenStringLiteralComment:
 Style/NumericPredicate:
   EnforcedStyle: comparison
 
-Lint/RescueWithoutErrorClass:
+Style/FormatStringToken:
+  Enabled: false
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: false
+
+Style/RescueStandardError:
   Enabled: false

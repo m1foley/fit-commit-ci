@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "= 5.1.4"
+gem "rails", "= 5.2.0"
 gem "turbolinks"
 gem "puma"
 gem "pg", "~> 0.20"
@@ -29,7 +29,7 @@ group :development do
   gem "listen"
   gem "spring"
   gem "spring-watcher-listen"
-  gem "rubocop", "~> 0.49", require: false
+  gem "rubocop", require: false
 end
 
 group :test do

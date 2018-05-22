@@ -4,7 +4,8 @@ class UserByRepo
   end
 
   def call
-    user = repo.users.where.not(github_token: nil).order("RANDOM()").
+    user = repo.users.where.not(github_token: nil).
+      order(Arel.sql("RANDOM()")).
       detect { |repo_user| can_access_repository?(repo_user) }
     user || fcci_user
   end
