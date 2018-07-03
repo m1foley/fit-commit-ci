@@ -1,3 +1,4 @@
+- Can't deactivate because `hook_id` is nil
 - Builds index
 - `force_https`
 - Handle invalid credentals on login
