@@ -25,6 +25,6 @@ class UserByRepo
   end
 
   def fcci_user
-    User.new(github_token: Rails.application.secrets.fetch(:fcci_github_token))
+    User.new(github_token: Rails.application.credentials.fcci_github_token)
   end
 end

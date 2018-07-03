@@ -1,6 +1,6 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :github,
-    Rails.application.secrets.fetch(:github_key),
-    Rails.application.secrets.fetch(:github_secret),
+    Rails.application.credentials.github[:key],
+    Rails.application.credentials.github[:secret],
     scope: "public_repo"
 end

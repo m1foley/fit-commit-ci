@@ -9,7 +9,7 @@ class UserByRepoTest < ActiveSupport::TestCase
     GithubApi.expects(:new).with(user.github_token).returns(github_api_mock)
 
     user_by_repo = UserByRepo.new(repo).call
-    assert_equal Rails.application.secrets.fetch(:fcci_github_token), user_by_repo.github_token
+    assert_equal Rails.application.credentials.fcci_github_token, user_by_repo.github_token
     assert_not user_by_repo.persisted?
     assert_not repo.users.include?(user)
   end
