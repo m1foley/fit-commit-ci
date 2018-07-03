@@ -27,8 +27,7 @@ class ActivationsController < ApplicationController
   private
 
   def load_repo
-    @repo = current_user.repos.with_membership_status.
-      find_by(id: params[:repo_id])
+    @repo = current_user.repos.with_membership_status.find_by(id: params[:repo_id])
     unless @repo
       flash[:error] = "Repo not found"
       redirect_to :repos
